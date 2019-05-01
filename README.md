@@ -5,7 +5,7 @@ Using the Movie DB API we can browse through a list of popular movies.
 
 ## Getting Started
 
-To run this project you need an Movie DB API-Key.
+To run this project you need a Movie DB API-Key.
 Get it here:
 
 ```
