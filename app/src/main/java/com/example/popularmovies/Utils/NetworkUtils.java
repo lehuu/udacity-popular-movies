@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
+    public static String POPULAR_URL = "movie/popular";
+    public static String TOP_RATED_URL = "movie/top_rated";
+
     private static String API_KEY = BuildConfig.ApiKey;
     private static String API_PARAM = "api_key";
     private static String BASE_URL = "https://api.themoviedb.org/3";
