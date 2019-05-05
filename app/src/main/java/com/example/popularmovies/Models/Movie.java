@@ -1,11 +1,11 @@
 package com.example.popularmovies.Models;
 
+import com.example.popularmovies.Utils.NetworkUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
 public class Movie {
-//Title, release date, movie poster, vote average, plot synopsis
     private int id;
     private String title;
     @SerializedName("release_date")
@@ -13,6 +13,8 @@ public class Movie {
     @SerializedName("vote_average")
     private float voteAverage;
     private String overview;
+    @SerializedName("poster_path")
+    private String posterPath;
 
     public int getId() {
         return id;
@@ -32,6 +34,10 @@ public class Movie {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getPosterPath() {
+        return NetworkUtils.POSTER_URL + posterPath;
     }
 
     @Override
