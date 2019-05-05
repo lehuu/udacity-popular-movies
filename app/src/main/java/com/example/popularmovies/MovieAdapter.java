@@ -5,15 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.popularmovies.Models.Movie;
 
+import java.util.List;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+    private final RequestManager mGlide;
+    private List<Movie> mMovieList;
 
-    private Movie[] mMovieList;
-
-    public MovieAdapter(Movie[] movieList) {
+    public MovieAdapter(List<Movie> movieList, RequestManager glide) {
+        this.mGlide = glide;
         this.mMovieList = movieList;
     }
 
@@ -27,20 +33,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(mMovieList[position]);
+        holder.bind(mMovieList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mMovieList.length;
+        return mMovieList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTitleTextView;
+        ImageView mPosterImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTitleTextView = itemView.findViewById(R.id.tv_movie_title);
+            mPosterImageView = itemView.findViewById(R.id.iv_movie_poster);
         }
 
         void bind(Movie movie) {
