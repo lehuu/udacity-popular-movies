@@ -16,6 +16,7 @@ import com.example.popularmovies.Utils.NetworkUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +24,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
+    private EndlessRecyclerViewScrollListener mScrollListener;
 
     private List<Movie> mMovies = new ArrayList<>();
+    private SortType mSortType = SortType.POPULARITY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +37,39 @@ public class MainActivity extends AppCompatActivity {
         //Initiate Recyclerview, adapter and layout manager
         mRecyclerView = findViewById(R.id.rv_movie_list);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        GridLayoutManager gridlayoutManager = new GridLayoutManager(this, 2);
+        mRecyclerView.setLayoutManager(gridlayoutManager);
         mAdapter = new MovieAdapter(mMovies, Glide.with(this));
         mRecyclerView.setAdapter(mAdapter);
 
+        //Create a scroll listener to load more data when the end of page is reached
+        mScrollListener = new EndlessRecyclerViewScrollListener(gridlayoutManager) {
+            @Override
+            public void onLoadMore(int page) {
+                loadMovies(page);
+            }
+        };
+        mRecyclerView.addOnScrollListener(mScrollListener);
+
         //Fetch the Movies
-        loadMovies(SortType.POPULARITY);
+        loadMovies(1);
     }
 
     /**
-     * Loads the movies from the API into the view based on the defined sort type
-     * @param sortType The sort type by which the movies should be loaded
+     * Loads the movies from the API into the view based on the current mSortType
      */
-    private void loadMovies(SortType sortType) {
-        switch(sortType) {
+    private void loadMovies(int page) {
+        URL url = null;
+
+        switch(mSortType) {
             case RATING:
-                new FetchMovieTask().execute(NetworkUtils.TOP_RATED_URL);
+                url = NetworkUtils.buildURL(NetworkUtils.TOP_RATED_URL, NetworkUtils.PAGE_PARAM, Integer.toString(page));
                 break;
             case POPULARITY:
-                new FetchMovieTask().execute(NetworkUtils.POPULAR_URL);
+                url = NetworkUtils.buildURL(NetworkUtils.POPULAR_URL, NetworkUtils.PAGE_PARAM, Integer.toString(page));
                 break;
         }
+        new FetchMovieTask().execute(url);
     }
 
     @Override
@@ -63,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * When the filter option item is selected, a popup window is opened to select by which way to sort the movies
+     * @param item the option item clicked
+     * @return if the click was handled
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.mi_sort) {
@@ -73,18 +93,18 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
                     dialog.dismiss();
                     switch(which){
                         case 0:
-                            mMovies.clear();
-                            loadMovies(SortType.POPULARITY);
+                            mSortType = SortType.POPULARITY;
                             break;
                         case 1:
-                            mMovies.clear();
-                            loadMovies(SortType.RATING);
+                            mSortType = SortType.RATING;
                             break;
                     }
+                    mMovies.clear();
+                    mScrollListener.resetState();
+                    loadMovies(1);
                 }
 
             });
@@ -100,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
         POPULARITY, RATING
     }
 
-    public class FetchMovieTask extends AsyncTask<String, Void, String> {
+    public class FetchMovieTask extends AsyncTask<URL, Void, String> {
 
         @Override
-        protected String doInBackground(String... urls) {
-            return NetworkUtils.getResponseFromHttpUrl(NetworkUtils.buildURL(urls[0]));
+        protected String doInBackground(URL... urls) {
+            return NetworkUtils.getResponseFromHttpUrl(urls[0]);
         }
 
         /**

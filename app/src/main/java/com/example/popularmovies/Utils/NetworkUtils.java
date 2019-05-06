@@ -14,10 +14,12 @@ public class NetworkUtils {
     public static final String POPULAR_URL = "movie/popular";
     public static final String TOP_RATED_URL = "movie/top_rated";
     public static final String POSTER_URL = "https://image.tmdb.org/t/p/w185";
+    public final static String PAGE_PARAM = "page";
 
-    private static String API_KEY = BuildConfig.ApiKey;
-    private static String API_PARAM = "api_key";
-    private static String BASE_URL = "https://api.themoviedb.org/3";
+    private final static String API_KEY = BuildConfig.ApiKey;
+    private final static String API_PARAM = "api_key";
+    private final static String BASE_URL = "https://api.themoviedb.org/3";
+
 
 
     /**
@@ -27,6 +29,22 @@ public class NetworkUtils {
      */
     public static URL buildURL(String path){
         Uri uri = Uri.parse(BASE_URL).buildUpon().appendEncodedPath(path).appendQueryParameter(API_PARAM, API_KEY).build();
+        URL result = null;
+
+        try {
+            result = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static URL buildURL(String path, String queryParam, String queryValue){
+        Uri uri = Uri.parse(BASE_URL).buildUpon().appendEncodedPath(path)
+                .appendQueryParameter(API_PARAM, API_KEY)
+                .appendQueryParameter(queryParam, queryValue)
+                .build();
         URL result = null;
 
         try {
