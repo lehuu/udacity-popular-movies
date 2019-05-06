@@ -1,6 +1,7 @@
 package com.example.popularmovies;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener{
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
     private EndlessRecyclerViewScrollListener mScrollListener;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridlayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(gridlayoutManager);
         mAdapter = new MovieAdapter(mMovies, Glide.with(this));
+        mAdapter.setClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         //Create a scroll listener to load more data when the end of page is reached
@@ -114,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        startActivity(intent);
     }
 
     private enum SortType {

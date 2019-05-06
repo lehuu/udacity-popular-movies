@@ -16,6 +16,7 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private final RequestManager mGlide;
     private List<Movie> mMovieList;
+    private ListItemClickListener mClickListener;
 
     public MovieAdapter(List<Movie> movieList, RequestManager glide) {
         this.mGlide = glide;
@@ -40,7 +41,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return mMovieList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ListItemClickListener clickListener){
+        mClickListener = clickListener;
+    }
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mTitleTextView;
         ImageView mPosterImageView;
 
@@ -48,11 +61,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             super(itemView);
             mTitleTextView = itemView.findViewById(R.id.tv_movie_title);
             mPosterImageView = itemView.findViewById(R.id.iv_movie_poster);
+            itemView.setOnClickListener(this);
         }
 
         void bind(Movie movie) {
             mTitleTextView.setText(movie.getTitle());
             mGlide.load(movie.getPosterPath()).into(mPosterImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mClickListener.onListItemClick(getAdapterPosition());
         }
     }
 }
