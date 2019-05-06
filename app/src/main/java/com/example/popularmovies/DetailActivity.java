@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,5 +47,21 @@ public class DetailActivity extends AppCompatActivity {
         mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , mMovie.getReleaseDate()));
         mOverviewTextView.setText(mMovie.getOverview());
         mVotesTextView.setText(String.format(Locale.US,"%.1f", mMovie.getVoteAverage()));
+    }
+
+    /**
+     * Overriding the up button in the toolbar to behave like the back button to keep scroll level on the MainActivity
+     * @param item the Menu item pressed, for now only the up button
+     * @return if the up button click was handled
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return(super.onOptionsItemSelected(item));
     }
 }
