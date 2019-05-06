@@ -15,11 +15,10 @@
 
     <android.support.design.widget.CollapsingToolbarLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="275dp"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:contentScrim="?attr/colorPrimary"
         android:fitsSystemWindows="true"
-        expa
         app:expandedTitleTextAppearance="@style/Toolbar.TitleText.Expanded"
         >
 
@@ -41,4 +40,51 @@
 
     </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="@dimen/padding_small"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_star"
+                android:id="@+id/iv_star"
+                android:padding="@dimen/padding_small"
+                app:layout_constraintDimensionRatio="W,1:1"
+                app:layout_constraintStart_toEndOf="@id/tv_release_date"
+                app:layout_constraintTop_toTopOf="@id/tv_release_date"
+                app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_votes"
+                app:layout_constraintStart_toEndOf="@id/iv_star"
+                app:layout_constraintTop_toTopOf="@id/tv_release_date"
+                app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_overview"
+                android:padding="@dimen/padding_small"
+                app:layout_constraintTop_toBottomOf="@id/tv_release_date"/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
