@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class NetworkUtils {
     public static final String POPULAR_URL = "movie/popular";
     public static final String TOP_RATED_URL = "movie/top_rated";
-    public static final String POSTER_URL = "https://image.tmdb.org/t/p/w185";
+    public static final String POSTER_URL = "https://image.tmdb.org/t/p/w500";
     public final static String PAGE_PARAM = "page";
 
     private final static String API_KEY = BuildConfig.ApiKey;
