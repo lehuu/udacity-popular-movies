@@ -3,4 +3,5 @@
     <string name="sort_rating">by Rating</string>
     <string name="sort_popularity">by Popularity</string>
     <string name="sort_by">Sort by</string>
+    <string name="poster_description">Poster Description</string>
 </resources>
