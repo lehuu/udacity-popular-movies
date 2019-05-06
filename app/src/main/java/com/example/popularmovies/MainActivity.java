@@ -1,7 +1,10 @@
 package com.example.popularmovies;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.popularmovies.Models.Movie;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
     private EndlessRecyclerViewScrollListener mScrollListener;
+    private TextView mNoConnectionTextView;
 
     private List<Movie> mMovies = new ArrayList<>();
     private SortType mSortType = SortType.POPULARITY;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mAdapter = new MovieAdapter(mMovies, Glide.with(this));
         mAdapter.setClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+        mNoConnectionTextView = findViewById(R.id.tv_no_connection);
 
         //Create a scroll listener to load more data when the end of page is reached
         mScrollListener = new EndlessRecyclerViewScrollListener(gridlayoutManager) {
@@ -61,6 +68,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
      * Loads the movies from the API into the view based on the current mSortType
      */
     private void loadMovies(int page) {
+        //Check network connection before calling the API
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if(activeNetwork == null || !activeNetwork.isConnected()){
+            mNoConnectionTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+        mNoConnectionTextView.setVisibility(View.INVISIBLE);
+
         URL url = null;
 
         switch(mSortType) {
