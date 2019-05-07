@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.popularmovies.Models.Movie;
+import com.example.popularmovies.Tasks.FetchMovieTask;
 import com.example.popularmovies.Utils.NetworkUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -101,7 +102,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         editor.putInt(getString(R.string.sort_by),  mSortType.ordinal());
         editor.commit();
 
-        new FetchMovieTask().execute(url);
+        new FetchMovieTask(new FetchMovieTask.OnCompleteListener() {
+            @Override
+            public void onComplete(String response) {
+                if(response == null || response.length() == 0)
+                    return;
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                Movie.MoviePage page = gson.fromJson(response, Movie.MoviePage.class);
+                //Load the movies into the recyclerview
+                mMovies.addAll(Arrays.asList(page.getResults()));
+                mAdapter.notifyDataSetChanged();
+            }
+        }).execute(url);
     }
 
     @Override
@@ -157,28 +169,5 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     private enum SortType {
         POPULARITY, RATING
-    }
-
-    public class FetchMovieTask extends AsyncTask<URL, Void, String> {
-
-        @Override
-        protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromHttpUrl(urls[0]);
-        }
-
-        /**
-         * Load the response into a MoviePage object and put it into view
-         * @param response The result which is returned from the http connection
-         */
-        @Override
-        protected void onPostExecute(String response) {
-            if(response == null || response.length() == 0)
-                return;
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            Movie.MoviePage page = gson.fromJson(response, Movie.MoviePage.class);
-            //Load the movies into the recyclerview
-            mMovies.addAll(Arrays.asList(page.getResults()));
-            mAdapter.notifyDataSetChanged();
-        }
     }
 }
