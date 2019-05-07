@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,7 +46,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         //Initiate Recyclerview, adapter and layout manager
         mRecyclerView = findViewById(R.id.rv_movie_list);
         mRecyclerView.setHasFixedSize(true);
-        GridLayoutManager gridlayoutManager = new GridLayoutManager(this, 2);
+        //if in landscape mode create a grid with 4 columns otherwise 2 columns
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            orientation = 4;
+        } else {
+            orientation = 2;
+        }
+
+        GridLayoutManager gridlayoutManager = new GridLayoutManager(this, orientation);
         mRecyclerView.setLayoutManager(gridlayoutManager);
         mAdapter = new MovieAdapter(mMovies, Glide.with(this));
         mAdapter.setClickListener(this);
