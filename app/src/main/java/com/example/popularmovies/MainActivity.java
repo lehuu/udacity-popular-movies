@@ -3,6 +3,7 @@ package com.example.popularmovies;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -11,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         };
         mRecyclerView.addOnScrollListener(mScrollListener);
 
+        //Get shared preferences from the last time the app was used / before it was rotated to get the sort by data
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int sortInteger = sharedPref.getInt(getString(R.string.sort_by), 0);
+        mSortType = SortType.values()[sortInteger];
+
+
         //Fetch the Movies
         loadMovies(1);
     }
@@ -89,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 url = NetworkUtils.buildURL(NetworkUtils.POPULAR_URL, NetworkUtils.PAGE_PARAM, Integer.toString(page));
                 break;
         }
+        //Save the selection as sharedpreference for next app startup or rotation
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.sort_by),  mSortType.ordinal());
+        editor.commit();
+
         new FetchMovieTask().execute(url);
     }
 
