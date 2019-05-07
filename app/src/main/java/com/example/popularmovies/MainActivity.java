@@ -172,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
          */
         @Override
         protected void onPostExecute(String response) {
+            if(response == null || response.length() == 0)
+                return;
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             Movie.MoviePage page = gson.fromJson(response, Movie.MoviePage.class);
             //Load the movies into the recyclerview
