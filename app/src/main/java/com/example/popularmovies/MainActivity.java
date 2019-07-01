@@ -73,11 +73,22 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         //Get shared preferences from the last time the app was used / before it was rotated to get the sort by data
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         int sortInteger = sharedPref.getInt(getString(R.string.sort_by), 0);
-        mSortType = SortType.values()[sortInteger];
-
+        setSortType(sortInteger);
 
         //Fetch the Movies
         loadMovies(1);
+    }
+
+    private void setSortType(int sortInteger) {
+        mSortType = SortType.values()[sortInteger];
+        switch (mSortType) {
+            case POPULARITY:
+                setTitle(getString(R.string.sort_popularity_title));
+                break;
+            case RATING:
+                setTitle(getString(R.string.sort_rating_title));
+                break;
+        }
     }
 
     /**
@@ -146,14 +157,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    switch(which){
-                        case 0:
-                            mSortType = SortType.POPULARITY;
-                            break;
-                        case 1:
-                            mSortType = SortType.RATING;
-                            break;
-                    }
+
+                    setSortType(which);
                     mMovies.clear();
                     mScrollListener.resetState();
                     loadMovies(1);

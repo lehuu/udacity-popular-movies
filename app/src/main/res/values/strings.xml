@@ -3,6 +3,10 @@
     <string name="sort_rating">by Rating</string>
     <string name="sort_popularity">by Popularity</string>
     <string name="sort_by">Sort by</string>
+
+    <string name="sort_rating_title">Top Rated Movies</string>
+    <string name="sort_popularity_title">Popular Movies</string>
+
     <string name="poster_description">Poster Description</string>
     <string name="no_connection">No internet connection</string>
 </resources>
