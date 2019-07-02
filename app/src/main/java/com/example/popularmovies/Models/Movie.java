@@ -18,6 +18,7 @@ public class Movie implements Parcelable {
     private String overview;
     @SerializedName("poster_path")
     private String posterPath;
+    private boolean favorite;
 
     Movie(Parcel parcel){
         id = parcel.readInt();
@@ -26,6 +27,7 @@ public class Movie implements Parcelable {
         voteAverage = parcel.readFloat();
         overview = parcel.readString();
         posterPath = parcel.readString();
+        favorite = parcel.readByte() != 0;
     }
 
     public int getId() {
@@ -52,6 +54,14 @@ public class Movie implements Parcelable {
         return NetworkUtils.POSTER_URL + posterPath;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
     @Override
     public String toString() {
         return id + ", " + title + ", " + releaseDate + ", " + voteAverage + ", " + overview;
@@ -70,6 +80,7 @@ public class Movie implements Parcelable {
         dest.writeFloat(voteAverage);
         dest.writeString(overview);
         dest.writeString(posterPath);
+        dest.writeByte((byte) (favorite ? 1 : 0));
     }
 
     static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
