@@ -1,96 +1,52 @@
 package com.example.popularmovies.Utils;
-import android.net.Uri;
 
 import com.example.popularmovies.BuildConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkUtils {
-    public static final String POPULAR_URL = "movie/popular";
-    public static final String TOP_RATED_URL = "movie/top_rated";
-    public static final String POSTER_URL = "https://image.tmdb.org/t/p/w500";
-    public final static String PAGE_PARAM = "page";
-
     private final static String API_KEY = BuildConfig.ApiKey;
     private final static String API_PARAM = "api_key";
-    private final static String BASE_URL = "https://api.themoviedb.org/3";
+    private final static String BASE_URL = "https://api.themoviedb.org/3/";
+    public static final String POSTER_URL = "https://image.tmdb.org/t/p/w500";
 
+    private static Retrofit retrofit;
 
+    public static Retrofit getRetrofitInstance(){
+        if(retrofit == null) {
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-    /**
-     * Create a URL object using the BASE_URL, api key and the passed path
-     * @param path the query path that should be added to the base URL
-     * @return a URL object built on the path string
-     */
-    public static URL buildURL(String path){
-        Uri uri = Uri.parse(BASE_URL).buildUpon().appendEncodedPath(path).appendQueryParameter(API_PARAM, API_KEY).build();
-        URL result = null;
+            OkHttpClient.Builder httpClient =  new OkHttpClient.Builder();
+            httpClient.addInterceptor(chain -> {
+                Request original = chain.request();
+                HttpUrl originalHttpUrl = original.url();
 
-        try {
-            result = new URL(uri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter(API_PARAM, API_KEY)
+                        .build();
+
+                // Request customization: add request headers
+                Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            });
+
+            retrofit = new retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(httpClient.build())
+                    .build();
         }
 
-        return result;
-    }
-
-    public static URL buildURL(String path, String queryParam, String queryValue){
-        Uri uri = Uri.parse(BASE_URL).buildUpon().appendEncodedPath(path)
-                .appendQueryParameter(API_PARAM, API_KEY)
-                .appendQueryParameter(queryParam, queryValue)
-                .build();
-        URL result = null;
-
-        try {
-            result = new URL(uri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    /**
-     * Create a HTTP connection to the passed url to get a json response back
-     * @param url to which the connection should be established
-     * @return the response from the server as a string
-     */
-    public static String getResponseFromHttpUrl(URL url) {
-        HttpURLConnection urlConnection = null;
-        Scanner scanner = null;
-        String response = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream in = urlConnection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST ?
-                    urlConnection.getInputStream() : urlConnection.getErrorStream();
-
-            scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
-
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                response = scanner.next();
-            }
-        } catch (MalformedURLException e) {
-            // Replace this with your exception handling
-            e.printStackTrace();
-        } catch (IOException e) {
-            // Replace this with your exception handling
-            e.printStackTrace();
-        } finally {
-            if(urlConnection != null)
-                urlConnection.disconnect();
-            if(scanner != null)
-                scanner.close();
-        }
-
-        return response;
+        return retrofit;
     }
 
 }

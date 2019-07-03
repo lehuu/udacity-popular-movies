@@ -3,22 +3,58 @@ package com.example.popularmovies.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.*;
+
 import com.example.popularmovies.Utils.NetworkUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
+@Entity(tableName = "movies")
 public class Movie implements Parcelable {
+    @PrimaryKey
+    @NonNull
     private int id;
     private String title;
     @SerializedName("release_date")
+    @ColumnInfo(name = "release_date")
     private Date releaseDate;
     @SerializedName("vote_average")
+    @ColumnInfo(name = "vote_average")
     private float voteAverage;
     private String overview;
     @SerializedName("poster_path")
+    @ColumnInfo(name = "poster_path")
     private String posterPath;
     private boolean favorite;
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Movie))
+            return false;
+
+        Movie other = (Movie) obj;
+
+        return other.getId() == id
+                && other.getOverview().equals(overview)
+                && other.getPosterPath().equals(posterPath)
+                && other.getReleaseDate() == releaseDate
+                && other.getTitle().equals(title)
+                && other.getVoteAverage() == voteAverage;
+    }
+
+    public Movie(int id, String title, Date releaseDate, float voteAverage, String overview, String posterPath, boolean favorite) {
+        this.id = id;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.posterPath = posterPath;
+        this.favorite = favorite;
+    }
 
     Movie(Parcel parcel){
         id = parcel.readInt();
@@ -105,10 +141,18 @@ public class Movie implements Parcelable {
         private int totalResults;
         @SerializedName("total_pages")
         private int totalPages;
-        private Movie[] results;
+        private List<Movie> results;
 
-        public Movie[] getResults() {
+        public List<Movie> getResults() {
             return results;
+        }
+
+        public int getPage() {
+            return page;
+        }
+
+        public int getTotalPages() {
+            return totalPages;
         }
 
         @Override

@@ -1,6 +1,8 @@
 package com.example.popularmovies;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,14 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.example.popularmovies.Models.Movie;
 
-import java.util.List;
-
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolder> {
     private final RequestManager mGlide;
-    private List<Movie> mMovieList;
+
     private ListItemClickListener mClickListener;
 
-    public MovieAdapter(List<Movie> movieList, RequestManager glide) {
-        this.mGlide = glide;
-        this.mMovieList = movieList;
+    protected MovieAdapter(RequestManager glide) {
+        super(DIFF_CALLBACK);
+        mGlide = glide;
     }
 
     @NonNull
@@ -33,12 +33,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(mMovieList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mMovieList.size();
+        Movie movie = getItem(position);
+        holder.bind(movie);
     }
 
     public void setClickListener(ListItemClickListener clickListener){
@@ -49,9 +45,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
      * The interface that receives onClick messages.
      */
     public interface ListItemClickListener {
-        void onListItemClick(int clickedItemIndex);
+        void onListItemClick(Movie movie);
     }
 
+    private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Movie>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+                    return oldItem.getId() == newItem.getId();
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mTitleTextView;
@@ -71,7 +79,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            mClickListener.onListItemClick(getAdapterPosition());
+            mClickListener.onListItemClick(getItem(getAdapterPosition()));
         }
     }
+
 }
