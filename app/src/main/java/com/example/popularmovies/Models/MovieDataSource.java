@@ -3,7 +3,6 @@ package com.example.popularmovies.Models;
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
-import com.example.popularmovies.MainActivity;
 import com.example.popularmovies.Utils.NetworkUtils;
 import com.example.popularmovies.Webservice.MovieService;
 

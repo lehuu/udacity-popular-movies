@@ -27,8 +27,10 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void setSortType(SortType sortType) {
-        this.mSortType = sortType;
+        if(sortType == mSortType && mMoviesPagedList != null)
+            return;
 
+        this.mSortType = sortType;
         switch (mSortType) {
             case FAVORITE:
                 break;
