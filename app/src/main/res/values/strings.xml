@@ -13,4 +13,6 @@
     <string name="no_connection">No internet connection</string>
 
     <string name="bullet">\u2022</string>
+    <string name="runtime">%d min</string>
+
 </resources>

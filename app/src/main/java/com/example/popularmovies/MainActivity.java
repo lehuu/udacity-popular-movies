@@ -24,9 +24,13 @@ import com.example.popularmovies.Models.Movie;
 import com.example.popularmovies.Models.MovieDataSource.SortType;
 import com.example.popularmovies.ViewModel.MainViewModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.rv_movie_list)
+    RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
 
     private MainViewModel mMainViewModel;
@@ -35,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         //Initiate Recyclerview, adapter and layout manager
-        mRecyclerView = findViewById(R.id.rv_movie_list);
         mRecyclerView.setHasFixedSize(true);
         //if in landscape mode create a grid with 4 columns otherwise 2 columns
         int orientation = getResources().getConfiguration().orientation;
