@@ -3,6 +3,7 @@ package com.example.popularmovies.Database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -17,20 +18,24 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
 * MovieRepository class used for backend calls
 * and responsible for deciding between network or local database loading
  */
 public class MovieRepository {
 
-    private final MovieService webservice;
-    private final MovieDao movieDao;
-    private final Executor executor;
+    private final MovieService mWebservice;
+    private final MovieDao mMovieDao;
+    private final Executor mExecutor;
 
     public MovieRepository(Application application) {
-        this.webservice = NetworkUtils.getRetrofitInstance().create(MovieService.class);
-        this.movieDao = MovieDatabase.getDatabase(application).movieDao();
-        this.executor = Executors.newSingleThreadExecutor();
+        this.mWebservice = NetworkUtils.getRetrofitInstance().create(MovieService.class);
+        this.mMovieDao = MovieDatabase.getDatabase(application).movieDao();
+        this.mExecutor = Executors.newSingleThreadExecutor();
     }
 
     /**
@@ -52,12 +57,31 @@ public class MovieRepository {
     }
 
     public LiveData<List<Movie>> getFavoriteMovies() {
-        return movieDao.getFavoriteMovies();
+        return mMovieDao.getFavoriteMovies();
+    }
+
+    public MutableLiveData<Movie> getMovieDetails(int id){
+        MutableLiveData<Movie> result = new MutableLiveData<>();
+
+        mWebservice.getMovieDetails(id).enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                if (response.isSuccessful()){
+                    result.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                result.setValue(null);
+            }
+        });
+        return result;
     }
 
     public void insertMovie(Movie movie) {
-        executor.execute(() -> {
-            movieDao.insertMovie(movie);
+        mExecutor.execute(() -> {
+            mMovieDao.insertMovie(movie);
         });
     }
 }

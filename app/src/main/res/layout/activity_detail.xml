@@ -87,26 +87,22 @@
             <TextView
                 android:id="@+id/tv_release_date"
                 android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                app:layout_constraintWidth_percent="0.5"
+                android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:padding="@dimen/padding_small"/>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_star"
-                android:id="@+id/iv_star"
-                android:padding="@dimen/padding_small"
-                app:layout_constraintDimensionRatio="W,1:1"
+            <TextView
+                style="@style/BulletPoint"
+                android:id="@+id/bullet"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_runtime"
                 app:layout_constraintStart_toEndOf="@id/tv_release_date"
-                app:layout_constraintTop_toTopOf="@id/tv_release_date"
                 app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_votes"
-                app:layout_constraintStart_toEndOf="@id/iv_star"
+                android:id="@+id/tv_runtime"
+                app:layout_constraintStart_toEndOf="@id/bullet"
                 app:layout_constraintTop_toTopOf="@id/tv_release_date"
                 app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
             <TextView

@@ -28,7 +28,6 @@ import com.example.popularmovies.ViewModel.MainViewModel;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
     private RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
-    private EndlessRecyclerViewScrollListener mScrollListener;
 
     private MainViewModel mMainViewModel;
 
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                     dialog.dismiss();
 
                     setSortType(which);
-                    //mScrollListener.resetState();
                 }
 
             });
@@ -146,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public void onListItemClick(Movie movie) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, movie);
+        intent.putExtra(Intent.EXTRA_UID, movie.getId());
         startActivity(intent);
     }
 

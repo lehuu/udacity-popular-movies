@@ -4,6 +4,7 @@ import com.example.popularmovies.Models.Movie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieService {
@@ -12,4 +13,7 @@ public interface MovieService {
 
     @GET("movie/top_rated")
     Call<Movie.MoviePage> getTopRatedMovies(@Query("page") int page);
+
+    @GET("movie/{movie_id}")
+    Call<Movie> getMovieDetails(@Path("movie_id") int id);
 }

@@ -30,6 +30,8 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "poster_path")
     private String posterPath;
     private boolean favorite;
+    private int runtime;
+    private boolean video;
 
     @Override
     public boolean equals(@Nullable Object obj) {
@@ -43,10 +45,16 @@ public class Movie implements Parcelable {
                 && other.getPosterPath().equals(posterPath)
                 && other.getReleaseDate() == releaseDate
                 && other.getTitle().equals(title)
-                && other.getVoteAverage() == voteAverage;
+                && other.getVoteAverage() == voteAverage
+                && other.getRuntime() == runtime
+                && other.hasVideo() == video;
+
     }
 
-    public Movie(int id, String title, Date releaseDate, float voteAverage, String overview, String posterPath, boolean favorite) {
+    public Movie(int id, String title, Date releaseDate,
+                 float voteAverage, String overview,
+                 String posterPath, boolean favorite,
+                 int runtime, boolean video) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -54,6 +62,8 @@ public class Movie implements Parcelable {
         this.overview = overview;
         this.posterPath = posterPath;
         this.favorite = favorite;
+        this.runtime = runtime;
+        this.video = video;
     }
 
     Movie(Parcel parcel){
@@ -64,6 +74,8 @@ public class Movie implements Parcelable {
         overview = parcel.readString();
         posterPath = parcel.readString();
         favorite = parcel.readByte() != 0;
+        runtime = parcel.readInt();
+        video = parcel.readByte() != 0;
     }
 
     public int getId() {
@@ -94,6 +106,14 @@ public class Movie implements Parcelable {
         return favorite;
     }
 
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public boolean hasVideo() {
+        return video;
+    }
+
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
@@ -117,6 +137,8 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeString(posterPath);
         dest.writeByte((byte) (favorite ? 1 : 0));
+        dest.writeInt(runtime);
+        dest.writeByte((byte) (video ? 1 : 0));
     }
 
     static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

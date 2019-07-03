@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -13,61 +16,73 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.popularmovies.Models.Movie;
+import com.example.popularmovies.ViewModel.DetailViewModel;
+import com.example.popularmovies.ViewModel.DetailViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
-    private Movie mMovie;
     private ImageView mPosterImageView;
     private TextView mReleaseDateTextView;
     private TextView mOverviewTextView;
-    private TextView mVotesTextView;
+    private TextView mRuntimeTextView;
     private FloatingActionButton mFab;
 
+    private DetailViewModel mDetailViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mMovie = getIntent().getParcelableExtra(Intent.EXTRA_TEXT);
 
-        //Set the poster
+        int movieId = getIntent().getIntExtra(Intent.EXTRA_UID,0);
+        DetailViewModelFactory modelFactory = new DetailViewModelFactory(getApplication(), movieId);
+        mDetailViewModel = ViewModelProviders.of(this, modelFactory).get(DetailViewModel.class);
+
+        //Get the view references
         mPosterImageView = findViewById(R.id.iv_movie_poster);
-        Glide.with(this).load(mMovie.getPosterPath()).into(mPosterImageView);
+        mReleaseDateTextView = findViewById(R.id.tv_release_date);
+        mOverviewTextView = findViewById(R.id.tv_overview);
+        mRuntimeTextView = findViewById(R.id.tv_runtime);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        mFab = findViewById(R.id.floating_action_button);
+
 
         //Setting up the toolbar with the movie title and the up button
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(mMovie.getTitle());
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Setting the Movie attributes to the textviews
-        mReleaseDateTextView = findViewById(R.id.tv_release_date);
-        mOverviewTextView = findViewById(R.id.tv_overview);
-        mVotesTextView = findViewById(R.id.tv_votes);
-        mFab = findViewById(R.id.floating_action_button);
 
-        mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , mMovie.getReleaseDate()));
-        mOverviewTextView.setText(mMovie.getOverview());
-        mVotesTextView.setText(String.format(Locale.US,"%.1f", mMovie.getVoteAverage()));
-
-        if(mMovie.isFavorite()) {
-            mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
-        }
-
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMovie.setFavorite(!mMovie.isFavorite());
-                if(mMovie.isFavorite()) {
-                    mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
-                } else {
-                    mFab.setColorFilter(getResources().getColor(R.color.white));
-                }
+        //Load the movie and onLoad populate the UI
+        mDetailViewModel.getMovie().observe(this, movie -> {
+            //Setting the Movie attributes to the textviews
+            mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , movie.getReleaseDate()));
+            mOverviewTextView.setText(movie.getOverview());
+            mRuntimeTextView.setText(movie.getRuntime() + " min");
+            toolbar.setTitle(movie.getTitle());
+            //Set the poster
+            Glide.with(this).load(movie.getPosterPath()).into(mPosterImageView);
+            //Initialize the Floating action button and the click listener for when it is marked favorite or not
+            if(movie.isFavorite()) {
+                mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
             }
+
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    movie.setFavorite(!movie.isFavorite());
+                    if(movie.isFavorite()) {
+                        mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
+                    } else {
+                        mFab.setColorFilter(getResources().getColor(R.color.white));
+                    }
+                }
+            });
         });
+
+
     }
 
     /**
