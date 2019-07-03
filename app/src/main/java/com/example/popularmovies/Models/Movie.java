@@ -29,6 +29,9 @@ public class Movie implements Parcelable {
     @SerializedName("poster_path")
     @ColumnInfo(name = "poster_path")
     private String posterPath;
+    @SerializedName("backdrop_path")
+    @ColumnInfo(name = "backdrop_path")
+    private String backdropPath;
     private boolean favorite;
     private int runtime;
     private boolean video;
@@ -43,6 +46,7 @@ public class Movie implements Parcelable {
         return other.getId() == id
                 && other.getOverview().equals(overview)
                 && other.getPosterPath().equals(posterPath)
+                && other.getBackdropPath().equals(backdropPath)
                 && other.getReleaseDate() == releaseDate
                 && other.getTitle().equals(title)
                 && other.getVoteAverage() == voteAverage
@@ -53,7 +57,7 @@ public class Movie implements Parcelable {
 
     public Movie(int id, String title, Date releaseDate,
                  float voteAverage, String overview,
-                 String posterPath, boolean favorite,
+                 String posterPath, String backdropPath, boolean favorite,
                  int runtime, boolean video) {
         this.id = id;
         this.title = title;
@@ -61,6 +65,7 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
         this.overview = overview;
         this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
         this.favorite = favorite;
         this.runtime = runtime;
         this.video = video;
@@ -73,6 +78,7 @@ public class Movie implements Parcelable {
         voteAverage = parcel.readFloat();
         overview = parcel.readString();
         posterPath = parcel.readString();
+        backdropPath = parcel.readString();
         favorite = parcel.readByte() != 0;
         runtime = parcel.readInt();
         video = parcel.readByte() != 0;
@@ -100,6 +106,10 @@ public class Movie implements Parcelable {
 
     public String getPosterPath() {
         return NetworkUtils.POSTER_URL + posterPath;
+    }
+
+    public String getBackdropPath() {
+        return NetworkUtils.BACKDROP_URL + backdropPath;
     }
 
     public boolean isFavorite() {
@@ -136,6 +146,7 @@ public class Movie implements Parcelable {
         dest.writeFloat(voteAverage);
         dest.writeString(overview);
         dest.writeString(posterPath);
+        dest.writeString(backdropPath);
         dest.writeByte((byte) (favorite ? 1 : 0));
         dest.writeInt(runtime);
         dest.writeByte((byte) (video ? 1 : 0));

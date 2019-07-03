@@ -15,6 +15,7 @@ public class NetworkUtils {
     private final static String API_PARAM = "api_key";
     private final static String BASE_URL = "https://api.themoviedb.org/3/";
     public static final String POSTER_URL = "https://image.tmdb.org/t/p/w342";
+    public static final String BACKDROP_URL = "https://image.tmdb.org/t/p/w500";
 
     private static Retrofit retrofit;
 

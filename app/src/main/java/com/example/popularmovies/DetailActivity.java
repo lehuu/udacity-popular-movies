@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity {
             mToolbarLayout.setTitle(movie.getTitle());
 
             //Set the poster
-            Glide.with(this).load(movie.getPosterPath()).into(mPosterImageView);
+            Glide.with(this).load(movie.getBackdropPath()).into(mPosterImageView);
 
             //Adding the observer again to listen only to changes in the favorite attribute
             mDetailViewModel.getMovie().observe(this, favoriteMovie -> {
