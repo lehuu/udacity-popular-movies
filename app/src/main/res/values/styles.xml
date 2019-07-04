@@ -34,7 +34,7 @@
 
     <style name="BulletPoint">
         <item name="android:gravity">center</item>
-        <item name="layout_constraintWidth_percent">0.3</item>
+        <item name="layout_constraintWidth_percent">0.175</item>
         <item name="android:text">@string/bullet</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>

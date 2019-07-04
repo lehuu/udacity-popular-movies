@@ -28,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_release_date) TextView mReleaseDateTextView;
     @BindView(R.id.tv_overview) TextView mOverviewTextView;
     @BindView(R.id.tv_runtime) TextView mRuntimeTextView;
+    @BindView(R.id.tv_votes) TextView mVotesTextView;
     @BindView(R.id.floating_action_button) FloatingActionButton mFab;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mToolbarLayout;
     @OnClick(R.id.floating_action_button) void markFavorite(){
@@ -63,6 +64,7 @@ public class DetailActivity extends AppCompatActivity {
             mOverviewTextView.setText(movie.getOverview());
             mRuntimeTextView.setText(getString(R.string.runtime, movie.getRuntime()));
             mToolbarLayout.setTitle(movie.getTitle());
+            mVotesTextView.setText(String.format(Locale.US,"%.1f", movie.getVoteAverage()));
 
             //Set the poster
             Glide.with(this).load(movie.getBackdropPath()).into(mPosterImageView);

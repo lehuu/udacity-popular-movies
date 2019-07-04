@@ -97,7 +97,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
             <TextView
                 style="@style/BulletPoint"
-                android:id="@+id/bullet"
+                android:id="@+id/bullet_1"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
                 app:layout_constraintEnd_toStartOf="@id/tv_runtime"
                 app:layout_constraintStart_toEndOf="@id/tv_release_date"/>
@@ -106,8 +106,20 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_runtime"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
-                app:layout_constraintStart_toEndOf="@id/bullet" />
-              <View
+                app:layout_constraintStart_toEndOf="@id/bullet_1" />
+            <TextView
+                style="@style/BulletPoint"
+                android:id="@+id/bullet_2"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
+                app:layout_constraintEnd_toStartOf="@id/tv_votes"
+                app:layout_constraintStart_toEndOf="@id/tv_runtime"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_votes"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
+                app:layout_constraintStart_toEndOf="@id/bullet_2" />
+            <View
                 style="@style/Divider"
                 app:layout_constraintTop_toBottomOf="@id/tv_release_date"
                 app:layout_constraintBottom_toTopOf="@id/tv_overview"
