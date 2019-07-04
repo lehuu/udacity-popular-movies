@@ -30,7 +30,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-
+                callback.onResult(null, null, FIRST_PAGE);
             }
         };
 
@@ -60,7 +60,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-
+                callback.onResult(null, params.key);
             }
         });
     }
@@ -82,7 +82,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-
+                callback.onResult(null, params.key);
             }
         });
     }
