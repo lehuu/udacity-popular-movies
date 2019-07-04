@@ -1,4 +1,4 @@
-package com.example.popularmovies.Models;
+package com.example.popularmovies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 
-import com.example.popularmovies.Utils.NetworkUtils;
+import com.example.popularmovies.utils.NetworkUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;

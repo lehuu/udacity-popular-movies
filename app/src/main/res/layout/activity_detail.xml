@@ -69,6 +69,7 @@
         android:layout_margin="@dimen/padding_big"
         android:scaleType="center"
         android:clickable="true"
+        android:focusable="true"
         android:tint="@android:color/white"
         android:src="@drawable/ic_star"
         app:layout_anchor="@id/scroll_view"
@@ -79,6 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:paddingLeft="@dimen/padding_big"
+        android:paddingRight="@dimen/padding_big"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,33 +89,40 @@
             android:layout_height="match_parent">
 
             <TextView
+                style="@style/DetailViewPadding"
                 android:id="@+id/tv_release_date"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:padding="@dimen/padding_small"/>
+                app:layout_constraintStart_toStartOf="parent"/>
             <TextView
                 style="@style/BulletPoint"
                 android:id="@+id/bullet"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
                 app:layout_constraintEnd_toStartOf="@id/tv_runtime"
-                app:layout_constraintStart_toEndOf="@id/tv_release_date"
-                app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
+                app:layout_constraintStart_toEndOf="@id/tv_release_date"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_runtime"
-                app:layout_constraintStart_toEndOf="@id/bullet"
-                app:layout_constraintTop_toTopOf="@id/tv_release_date"
-                app:layout_constraintBottom_toBottomOf="@id/tv_release_date"/>
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_release_date"
+                app:layout_constraintStart_toEndOf="@id/bullet" />
+              <View
+                style="@style/Divider"
+                app:layout_constraintTop_toBottomOf="@id/tv_release_date"
+                app:layout_constraintBottom_toTopOf="@id/tv_overview"
+                tools:ignore="MissingConstraints" />
             <TextView
+                style="@style/DetailViewPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_overview"
-                android:padding="@dimen/padding_small"
+                android:textColor="@color/lightGrey"
                 app:layout_constraintTop_toBottomOf="@id/tv_release_date"/>
-
+            <View
+                style="@style/Divider"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview"
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

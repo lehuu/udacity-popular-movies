@@ -1,4 +1,4 @@
-package com.example.popularmovies;
+package com.example.popularmovies.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,9 +20,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.popularmovies.Models.Movie;
-import com.example.popularmovies.Models.MovieDataSource.SortType;
-import com.example.popularmovies.ViewModel.MainViewModel;
+import com.example.popularmovies.R;
+import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.models.MovieDataSource.SortType;
+import com.example.popularmovies.viewmodel.MainViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

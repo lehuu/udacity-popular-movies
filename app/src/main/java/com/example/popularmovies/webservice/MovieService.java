@@ -1,6 +1,6 @@
-package com.example.popularmovies.Webservice;
+package com.example.popularmovies.webservice;
 
-import com.example.popularmovies.Models.Movie;
+import com.example.popularmovies.models.Movie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

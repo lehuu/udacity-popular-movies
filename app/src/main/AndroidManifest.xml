@@ -14,16 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailActivity"
-            android:parentActivityName="com.example.popularmovies.MainActivity"
+        <activity android:name=".ui.DetailActivity"
+            android:parentActivityName="com.example.popularmovies.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.popularmovies.MainActivity" />
+                android:value="com.example.popularmovies.ui.MainActivity" />
 
         </activity>
-        <activity android:name=".MainActivity" android:launchMode="singleTop">
+        <activity android:name=".ui.MainActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

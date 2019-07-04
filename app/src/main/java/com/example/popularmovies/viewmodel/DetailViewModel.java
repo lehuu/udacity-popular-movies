@@ -1,4 +1,4 @@
-package com.example.popularmovies.ViewModel;
+package com.example.popularmovies.viewmodel;
 
 import android.app.Application;
 
@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.popularmovies.Database.MovieRepository;
-import com.example.popularmovies.Models.Movie;
+import com.example.popularmovies.database.MovieRepository;
+import com.example.popularmovies.models.Movie;
 
 public class DetailViewModel extends AndroidViewModel {
     private MutableLiveData<Movie> mMovie;

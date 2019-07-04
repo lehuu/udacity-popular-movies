@@ -1,4 +1,4 @@
-package com.example.popularmovies.ViewModel;
+package com.example.popularmovies.viewmodel;
 
 import android.app.Application;
 

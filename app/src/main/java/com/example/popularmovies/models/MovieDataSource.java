@@ -1,10 +1,10 @@
-package com.example.popularmovies.Models;
+package com.example.popularmovies.models;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
-import com.example.popularmovies.Utils.NetworkUtils;
-import com.example.popularmovies.Webservice.MovieService;
+import com.example.popularmovies.utils.NetworkUtils;
+import com.example.popularmovies.webservice.MovieService;
 
 import retrofit2.Call;
 import retrofit2.Callback;

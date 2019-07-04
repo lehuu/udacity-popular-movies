@@ -1,19 +1,19 @@
-package com.example.popularmovies;
+package com.example.popularmovies.ui;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.lifecycle.ViewModelProviders;
 
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.popularmovies.ViewModel.DetailViewModel;
-import com.example.popularmovies.ViewModel.DetailViewModelFactory;
+import com.example.popularmovies.R;
+import com.example.popularmovies.viewmodel.DetailViewModel;
+import com.example.popularmovies.viewmodel.DetailViewModelFactory;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

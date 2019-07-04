@@ -1,4 +1,4 @@
-package com.example.popularmovies;
+package com.example.popularmovies.ui;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.example.popularmovies.Models.Movie;
+import com.example.popularmovies.R;
+import com.example.popularmovies.models.Movie;
 
 public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolder> {
     private final RequestManager mGlide;

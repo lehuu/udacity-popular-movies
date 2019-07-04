@@ -1,4 +1,4 @@
-package com.example.popularmovies.Utils;
+package com.example.popularmovies.utils;
 
 import com.example.popularmovies.BuildConfig;
 import com.google.gson.Gson;

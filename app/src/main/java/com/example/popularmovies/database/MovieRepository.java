@@ -1,4 +1,4 @@
-package com.example.popularmovies.Database;
+package com.example.popularmovies.database;
 
 import android.app.Application;
 
@@ -7,12 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.example.popularmovies.Models.Movie;
-import com.example.popularmovies.Models.MovieDao;
-import com.example.popularmovies.Models.MovieDataSource;
-import com.example.popularmovies.Models.MovieDataSourceFactory;
-import com.example.popularmovies.Utils.NetworkUtils;
-import com.example.popularmovies.Webservice.MovieService;
+import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.models.MovieDao;
+import com.example.popularmovies.models.MovieDataSource;
+import com.example.popularmovies.models.MovieDataSourceFactory;
+import com.example.popularmovies.utils.NetworkUtils;
+import com.example.popularmovies.webservice.MovieService;
 
 import java.util.List;
 import java.util.concurrent.Executor;

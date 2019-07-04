@@ -1,4 +1,4 @@
-package com.example.popularmovies.Models;
+package com.example.popularmovies.models;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
