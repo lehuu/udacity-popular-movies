@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.popularmovies.R;
@@ -90,7 +91,8 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Vi
                     mPlayImageView.setVisibility(View.VISIBLE);
                     return false;
                 }
-            }).into(mTrailerImageView);
+            }).transition(DrawableTransitionOptions.withCrossFade())
+                    .into(mTrailerImageView);
         }
 
         @Override

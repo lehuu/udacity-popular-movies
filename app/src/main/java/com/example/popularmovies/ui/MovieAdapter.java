@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.popularmovies.R;
 import com.example.popularmovies.models.Movie;
 import com.example.popularmovies.utils.OnItemClickListener;
@@ -76,7 +77,9 @@ public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolde
 
         void bind(Movie movie) {
             mTitleTextView.setText(movie.getTitle());
-            mGlide.load(movie.getPosterPath()).into(mPosterImageView);
+            mGlide.load(movie.getPosterPath())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(mPosterImageView);
         }
 
         @Override

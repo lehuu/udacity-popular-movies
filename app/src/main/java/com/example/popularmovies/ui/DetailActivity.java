@@ -3,11 +3,11 @@ package com.example.popularmovies.ui;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.popularmovies.R;
 import com.example.popularmovies.models.MovieVideo;
 import com.example.popularmovies.viewmodel.DetailViewModel;
@@ -86,7 +88,9 @@ public class DetailActivity extends AppCompatActivity {
             mVotesTextView.setText(String.format(Locale.US,"%.1f", movie.getVoteAverage()));
 
             //Set the poster
-            Glide.with(this).load(movie.getBackdropPath()).into(mPosterImageView);
+            Glide.with(this).load(movie.getBackdropPath())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(mPosterImageView);
 
             //Adding the observer again to listen only to changes in the favorite attribute
             mDetailViewModel.getMovie().observe(this, favoriteMovie -> {
