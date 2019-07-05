@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -101,6 +102,9 @@ public class DetailActivity extends AppCompatActivity {
         //Load the trailers and onLoad populate the UI
         mDetailViewModel.getMovieVideos().observe(this, movieVideos -> {
             mMovieVideoAdapter.setMovieVideos(movieVideos);
+            if(mMovieVideoAdapter.getItemCount() > 0) {
+                mMovieVideoRecyclerView.setVisibility(View.VISIBLE);
+            }
         });
     }
 }
