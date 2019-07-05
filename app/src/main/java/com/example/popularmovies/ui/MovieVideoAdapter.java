@@ -80,18 +80,8 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Vi
 
         public void bind(MovieVideo movieVideo){
             //Set the play button visibility when the thumbnail is loaded so it does not look weird
-            mGlide.load(movieVideo.getThumbnailPath()).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    mPlayImageView.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            }).transition(DrawableTransitionOptions.withCrossFade())
+            mGlide.load(movieVideo.getThumbnailPath())
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into(mTrailerImageView);
         }
 
