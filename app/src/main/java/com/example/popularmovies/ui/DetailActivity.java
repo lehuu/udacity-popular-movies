@@ -111,7 +111,8 @@ public class DetailActivity extends AppCompatActivity {
         mDetailViewModel.getMovie().observe(this, movie -> {
             mDetailViewModel.getMovie().removeObservers(this);
             //Setting the Movie attributes to the textviews
-            mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , movie.getReleaseDate()));
+            if(movie.getReleaseDate() != null)
+                mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , movie.getReleaseDate()));
             mOverviewTextView.setText(movie.getOverview());
             mRuntimeTextView.setText(getString(R.string.runtime, movie.getRuntime()));
             mToolbarLayout.setTitle(movie.getTitle());

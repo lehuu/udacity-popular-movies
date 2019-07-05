@@ -3,6 +3,16 @@ package com.example.popularmovies.utils;
 import com.example.popularmovies.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -23,7 +33,20 @@ public class NetworkUtils {
 
     public static Retrofit getRetrofitInstance(){
         if(retrofit == null) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                        //Use custom date serializer for occasional empty date fields in JSON
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        @Override
+                        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                            try {
+                                return dateFormat.parse(json.getAsString());
+                            } catch (ParseException e) {
+                                return null;
+                            }
+                        }
+                    })
+                    .create();
 
             OkHttpClient.Builder httpClient =  new OkHttpClient.Builder();
             httpClient.addInterceptor(chain -> {
