@@ -15,4 +15,6 @@
     <string name="bullet">\u2022</string>
     <string name="runtime">%d min</string>
 
+    <string name="add_to_favorite">Added to favorite movies</string>
+    <string name="removed_from_favorite">Removed from favorite movies</string>
 </resources>

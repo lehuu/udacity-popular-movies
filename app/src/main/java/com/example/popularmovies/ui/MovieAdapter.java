@@ -77,7 +77,7 @@ public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolde
 
         void bind(Movie movie) {
             mTitleTextView.setText(movie.getTitle());
-            mGlide.load(movie.getPosterPath())
+            mGlide.load(movie.getFullPosterPath())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(mPosterImageView);
         }

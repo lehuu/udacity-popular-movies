@@ -50,5 +50,11 @@ public class DetailViewModel extends AndroidViewModel {
         Movie movie = mMovie.getValue();
         movie.setFavorite(!movie.isFavorite());
         mMovie.setValue(movie);
+
+        if(movie.isFavorite()) {
+            mRepository.insertMovie(movie);
+        } else {
+            mRepository.deleteMovie(movie);
+        }
     }
 }

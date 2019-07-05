@@ -45,8 +45,8 @@ public class Movie implements Parcelable {
 
         return other.getId() == id
                 && other.getOverview().equals(overview)
-                && other.getPosterPath().equals(posterPath)
-                && other.getBackdropPath().equals(backdropPath)
+                && other.getFullPosterPath().equals(posterPath)
+                && other.getFullBackdropPath().equals(backdropPath)
                 && other.getReleaseDate() == releaseDate
                 && other.getTitle().equals(title)
                 && other.getVoteAverage() == voteAverage
@@ -105,10 +105,18 @@ public class Movie implements Parcelable {
     }
 
     public String getPosterPath() {
-        return NetworkUtils.POSTER_URL + posterPath;
+        return posterPath;
     }
 
     public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public String getFullPosterPath() {
+        return NetworkUtils.POSTER_URL + posterPath;
+    }
+
+    public String getFullBackdropPath() {
         return NetworkUtils.BACKDROP_URL + backdropPath;
     }
 

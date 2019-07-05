@@ -22,6 +22,9 @@ public interface MovieDao {
     @Query("SELECT * FROM movies WHERE id==:id")
     LiveData<Movie> getMovie(int id);
 
+    @Query("SELECT * FROM movies WHERE id==:id LIMIT 1")
+    Movie hasMovie(int id);
+
     @Insert
     void insertMovie(Movie movie);
 

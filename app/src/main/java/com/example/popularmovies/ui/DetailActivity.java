@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +17,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.popularmovies.R;
+import com.example.popularmovies.models.Movie;
 import com.example.popularmovies.models.MovieReview;
 import com.example.popularmovies.models.MovieVideo;
 import com.example.popularmovies.viewmodel.DetailViewModel;
 import com.example.popularmovies.viewmodel.DetailViewModelFactory;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -39,9 +42,20 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mToolbarLayout;
     @BindView(R.id.rv_video_list) RecyclerView mMovieVideoRecyclerView;
     @BindView(R.id.rv_review_list) RecyclerView mMovieReviewRecyclerView;
+    @BindView(R.id.layout) CoordinatorLayout mParentLayout;
     @OnClick(R.id.floating_action_button) void markFavorite(){
-        if(mDetailViewModel != null)
+        if(mDetailViewModel != null) {
+            Movie movie = mDetailViewModel.getMovie().getValue();
             mDetailViewModel.switchFavorite();
+            if(movie != null && movie.isFavorite()) {
+                mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
+                Snackbar.make(mParentLayout, R.string.add_to_favorite, Snackbar.LENGTH_SHORT).show();
+            } else {
+                mFab.setColorFilter(getResources().getColor(R.color.white));
+                Snackbar.make(mParentLayout, R.string.removed_from_favorite, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     private DetailViewModel mDetailViewModel;
@@ -104,19 +118,15 @@ public class DetailActivity extends AppCompatActivity {
             mVotesTextView.setText(String.format(Locale.US,"%.1f", movie.getVoteAverage()));
 
             //Set the poster
-            Glide.with(this).load(movie.getBackdropPath())
+            Glide.with(this).load(movie.getFullBackdropPath())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(mPosterImageView);
 
-            //Adding the observer again to listen only to changes in the favorite attribute
-            mDetailViewModel.getMovie().observe(this, favoriteMovie -> {
-                //Initialize the Floating action button and the click listener for when it is marked favorite or not
-                if(movie.isFavorite()) {
-                    mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
-                } else {
-                    mFab.setColorFilter(getResources().getColor(R.color.white));
-                }
-            });
+            if(movie.isFavorite()) {
+                mFab.setColorFilter(getResources().getColor(R.color.favoriteYellow));
+            } else {
+                mFab.setColorFilter(getResources().getColor(R.color.white));
+            }
         });
 
         //Load the trailers and onLoad populate the UI

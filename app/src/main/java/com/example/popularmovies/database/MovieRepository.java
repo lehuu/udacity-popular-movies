@@ -61,25 +61,38 @@ public class MovieRepository {
     public MutableLiveData<Movie> getMovieDetails(int id){
         MutableLiveData<Movie> result = new MutableLiveData<>();
 
-        mWebService.getMovieDetails(id).enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                if (response.isSuccessful()){
-                    result.setValue(response.body());
-                }
-            }
+        mExecutor.execute(() -> {
+            Movie movie = mMovieDao.hasMovie(id);
+            if(movie != null)
+                result.postValue(movie);
+            else
+                mWebService.getMovieDetails(id).enqueue(new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+                        if (response.isSuccessful()){
+                            result.setValue(response.body());
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                result.setValue(null);
-            }
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
+                        result.setValue(null);
+                    }
+                });
         });
+
         return result;
     }
 
     public void insertMovie(Movie movie) {
         mExecutor.execute(() -> {
             mMovieDao.insertMovie(movie);
+        });
+    }
+
+    public void deleteMovie(Movie movie) {
+        mExecutor.execute(()-> {
+            mMovieDao.deleteMovie(movie);
         });
     }
 
