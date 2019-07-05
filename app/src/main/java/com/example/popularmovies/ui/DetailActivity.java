@@ -83,6 +83,8 @@ public class DetailActivity extends AppCompatActivity {
         //Set the click listener for trailers
         mMovieReviewAdapter.setOnItemClickListener(position -> {
             MovieReview review = mMovieReviewAdapter.getItemAtPosition(position);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
+            startActivity(intent);
         });
 
         populateUI();

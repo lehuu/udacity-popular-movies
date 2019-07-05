@@ -61,6 +61,7 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(MovieReview review) {

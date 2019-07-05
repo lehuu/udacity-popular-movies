@@ -43,6 +43,10 @@ public class MovieReview implements Parcelable {
         return content;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     @NonNull
     @Override
     public String toString() {
