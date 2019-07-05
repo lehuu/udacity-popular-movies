@@ -1,18 +1,13 @@
 package com.example.popularmovies.database;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieDao;
-import com.example.popularmovies.models.MovieDataSource;
-import com.example.popularmovies.models.MovieDataSourceFactory;
-import com.example.popularmovies.models.MovieVideo;
+import com.example.popularmovies.models.*;
 import com.example.popularmovies.utils.NetworkUtils;
 import com.example.popularmovies.webservice.MovieService;
 
@@ -20,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,6 +110,25 @@ public class MovieRepository {
                 result.add(video);
             }
         }
+        return result;
+    }
+
+    public MutableLiveData<List<MovieReview>> getMovieReviews(int id) {
+        MutableLiveData<List<MovieReview>> result = new MutableLiveData<>();
+
+        mWebService.getMovieReviews(id).enqueue(new Callback<MovieReview.MovieReviewPage>() {
+            @Override
+            public void onResponse(Call<MovieReview.MovieReviewPage> call, Response<MovieReview.MovieReviewPage> response) {
+                if (response.isSuccessful() && response.body() != null){
+                    result.setValue(response.body().getResults());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieReview.MovieReviewPage> call, Throwable t) {
+                result.setValue(null);
+            }
+        });
         return result;
     }
 }

@@ -3,7 +3,6 @@ package com.example.popularmovies.ui;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.popularmovies.R;
+import com.example.popularmovies.models.MovieReview;
 import com.example.popularmovies.models.MovieVideo;
 import com.example.popularmovies.viewmodel.DetailViewModel;
 import com.example.popularmovies.viewmodel.DetailViewModelFactory;
@@ -39,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.floating_action_button) FloatingActionButton mFab;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mToolbarLayout;
     @BindView(R.id.rv_video_list) RecyclerView mMovieVideoRecyclerView;
+    @BindView(R.id.rv_review_list) RecyclerView mMovieReviewRecyclerView;
     @OnClick(R.id.floating_action_button) void markFavorite(){
         if(mDetailViewModel != null)
             mDetailViewModel.switchFavorite();
@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private DetailViewModel mDetailViewModel;
     private MovieVideoAdapter mMovieVideoAdapter;
+    private MovieReviewAdapter mMovieReviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +75,25 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
         });
 
+        //Initialize the adapter for the review section
+        mMovieReviewAdapter = new MovieReviewAdapter();
+        mMovieReviewRecyclerView.setAdapter(mMovieReviewAdapter);
+        mMovieReviewRecyclerView.addItemDecoration(new MarginItemDecoration(this, R.dimen.padding_small));
+
+        //Set the click listener for trailers
+        mMovieReviewAdapter.setOnItemClickListener(position -> {
+            MovieReview review = mMovieReviewAdapter.getItemAtPosition(position);
+        });
+
         populateUI();
     }
+
+
 
     private void populateUI(){
         //Load the movie and onLoad populate the UI
         mDetailViewModel.getMovie().observe(this, movie -> {
+            mDetailViewModel.getMovie().removeObservers(this);
             //Setting the Movie attributes to the textviews
             mReleaseDateTextView.setText(String.format(Locale.US, "%1$tB %1$te, %1$tY" , movie.getReleaseDate()));
             mOverviewTextView.setText(movie.getOverview());
@@ -105,9 +119,18 @@ public class DetailActivity extends AppCompatActivity {
 
         //Load the trailers and onLoad populate the UI
         mDetailViewModel.getMovieVideos().observe(this, movieVideos -> {
+            mDetailViewModel.getMovieVideos().removeObservers(this);
             mMovieVideoAdapter.setMovieVideos(movieVideos);
             if(mMovieVideoAdapter.getItemCount() > 0) {
                 mMovieVideoRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mDetailViewModel.getMovieReviews().observe(this, movieReviews -> {
+            mDetailViewModel.getMovieReviews().removeObservers(this);
+            mMovieReviewAdapter.setMovieReviews(movieReviews);
+            if(mMovieReviewAdapter.getItemCount() > 0) {
+                mMovieReviewRecyclerView.setVisibility(View.VISIBLE);
             }
         });
     }

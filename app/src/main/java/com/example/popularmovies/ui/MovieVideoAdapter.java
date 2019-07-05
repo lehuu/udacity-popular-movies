@@ -68,7 +68,7 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Vi
         return mMovieVideos == null ? 0 : mMovieVideos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.iv_movie_trailer) ImageView mTrailerImageView;
         @BindView(R.id.iv_play) ImageView mPlayImageView;
 

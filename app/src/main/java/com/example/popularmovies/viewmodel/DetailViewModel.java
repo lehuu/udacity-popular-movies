@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.popularmovies.database.MovieRepository;
 import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.models.MovieReview;
 import com.example.popularmovies.models.MovieVideo;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class DetailViewModel extends AndroidViewModel {
 
     private MutableLiveData<Movie> mMovie;
     private MutableLiveData<List<MovieVideo>> mMovieVideos;
+    private MutableLiveData<List<MovieReview>> mMovieReviews;
 
     public DetailViewModel(@NonNull Application application, int movieId) {
         super(application);
@@ -36,6 +38,12 @@ public class DetailViewModel extends AndroidViewModel {
         if(mMovieVideos == null)
             mMovieVideos = mRepository.getMovieVideos(mMovieId);
         return mMovieVideos;
+    }
+
+    public LiveData<List<MovieReview>> getMovieReviews() {
+        if(mMovieReviews == null)
+            mMovieReviews = mRepository.getMovieReviews(mMovieId);
+        return mMovieReviews;
     }
 
     public void switchFavorite(){

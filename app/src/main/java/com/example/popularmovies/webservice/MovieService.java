@@ -1,6 +1,7 @@
 package com.example.popularmovies.webservice;
 
 import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.models.MovieReview;
 import com.example.popularmovies.models.MovieVideo;
 
 import retrofit2.Call;
@@ -20,4 +21,7 @@ public interface MovieService {
 
     @GET("movie/{movie_id}/videos")
     Call<MovieVideo.MovieVideoPage> getMovieVideos(@Path("movie_id") int id);
+
+    @GET("movie/{movie_id}/reviews")
+    Call<MovieReview.MovieReviewPage> getMovieReviews(@Path("movie_id") int id);
 }
