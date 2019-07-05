@@ -68,7 +68,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //Set the click listener for trailers
         mMovieVideoAdapter.setOnItemClickListener(position -> {
-            MovieVideo video = mMovieVideoAdapter.getItem(position);
+            MovieVideo video = mMovieVideoAdapter.getItemAtPosition(position);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.getYoutubeLink()));
                 startActivity(intent);
         });

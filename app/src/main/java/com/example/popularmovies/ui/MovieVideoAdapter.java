@@ -1,19 +1,15 @@
 package com.example.popularmovies.ui;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -43,7 +39,7 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public MovieVideo getItem(int index){
+    public MovieVideo getItemAtPosition(int index){
         if(mMovieVideos == null || index >= mMovieVideos.size())
             return null;
         return mMovieVideos.get(index);

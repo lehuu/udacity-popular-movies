@@ -23,13 +23,14 @@ import com.bumptech.glide.Glide;
 import com.example.popularmovies.R;
 import com.example.popularmovies.models.Movie;
 import com.example.popularmovies.models.MovieDataSource.SortType;
+import com.example.popularmovies.utils.OnItemClickListener;
 import com.example.popularmovies.viewmodel.MainViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
     @BindView(R.id.rv_movie_list)
     RecyclerView mRecyclerView;
     private MovieAdapter mAdapter;
@@ -133,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-
                     setSortType(which);
                 }
 
@@ -147,7 +147,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     }
 
     @Override
-    public void onListItemClick(Movie movie) {
+    public void onListItemClick(int position) {
+        Movie movie = mAdapter.getItemAtPosition(position);
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(Intent.EXTRA_UID, movie.getId());
         startActivity(intent);

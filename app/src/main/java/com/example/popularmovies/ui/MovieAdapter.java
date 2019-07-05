@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,23 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.example.popularmovies.R;
 import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.utils.OnItemClickListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolder> {
     private final RequestManager mGlide;
 
-    private ListItemClickListener mClickListener;
+    private OnItemClickListener mClickListener;
 
     protected MovieAdapter(RequestManager glide) {
         super(DIFF_CALLBACK);
         mGlide = glide;
+    }
+
+    public Movie getItemAtPosition(int index){
+        return getItem(index);
     }
 
     @NonNull
@@ -38,15 +47,8 @@ public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolde
         holder.bind(movie);
     }
 
-    public void setClickListener(ListItemClickListener clickListener){
+    public void setClickListener(OnItemClickListener clickListener){
         mClickListener = clickListener;
-    }
-
-    /**
-     * The interface that receives onClick messages.
-     */
-    public interface ListItemClickListener {
-        void onListItemClick(Movie movie);
     }
 
     private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK =
@@ -63,13 +65,12 @@ public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolde
             };
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView mTitleTextView;
-        ImageView mPosterImageView;
+        @BindView(R.id.tv_movie_title) TextView mTitleTextView;
+        @BindView(R.id.iv_movie_poster) ImageView mPosterImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTitleTextView = itemView.findViewById(R.id.tv_movie_title);
-            mPosterImageView = itemView.findViewById(R.id.iv_movie_poster);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -80,7 +81,7 @@ public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.ViewHolde
 
         @Override
         public void onClick(View v) {
-            mClickListener.onListItemClick(getItem(getAdapterPosition()));
+            mClickListener.onListItemClick(getAdapterPosition());
         }
     }
 
