@@ -45,16 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
         //Initiate Recyclerview, adapter and layout manager
         mRecyclerView.setHasFixedSize(true);
-        //if in landscape mode create a grid with 4 columns otherwise 2 columns
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            orientation = 4;
-        } else {
-            orientation = 2;
-        }
 
-        GridLayoutManager gridlayoutManager = new GridLayoutManager(this, orientation);
-        mRecyclerView.setLayoutManager(gridlayoutManager);
         mAdapter = new MovieAdapter(Glide.with(this));
         mAdapter.setClickListener(this);
         mRecyclerView.setAdapter(mAdapter);

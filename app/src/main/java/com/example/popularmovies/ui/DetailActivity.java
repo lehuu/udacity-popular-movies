@@ -60,8 +60,6 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Initialize the adapter for the trailer section
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mMovieVideoRecyclerView.setLayoutManager(linearLayoutManager);
         mMovieVideoAdapter = new MovieVideoAdapter(Glide.with(this));
         mMovieVideoRecyclerView.setAdapter(mMovieVideoAdapter);
         mMovieVideoRecyclerView.addItemDecoration(new MarginItemDecoration(this, R.dimen.padding_small));
