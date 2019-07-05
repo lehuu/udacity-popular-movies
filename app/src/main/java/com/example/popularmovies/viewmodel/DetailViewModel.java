@@ -9,18 +9,33 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.popularmovies.database.MovieRepository;
 import com.example.popularmovies.models.Movie;
+import com.example.popularmovies.models.MovieVideo;
+
+import java.util.List;
 
 public class DetailViewModel extends AndroidViewModel {
+    private int mMovieId;
+    private MovieRepository mRepository;
+
     private MutableLiveData<Movie> mMovie;
+    private MutableLiveData<List<MovieVideo>> mMovieVideos;
 
     public DetailViewModel(@NonNull Application application, int movieId) {
         super(application);
-        MovieRepository repository = new MovieRepository(application);
-        mMovie = repository.getMovieDetails(movieId);
+        mMovieId = movieId;
+        mRepository = new MovieRepository(application);
     }
 
     public LiveData<Movie> getMovie() {
+        if(mMovie == null)
+            mMovie = mRepository.getMovieDetails(mMovieId);
         return mMovie;
+    }
+
+    public LiveData<List<MovieVideo>> getMovieVideos() {
+        if(mMovieVideos == null)
+            mMovieVideos = mRepository.getMovieVideos(mMovieId);
+        return mMovieVideos;
     }
 
     public void switchFavorite(){

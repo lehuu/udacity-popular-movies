@@ -16,6 +16,8 @@ public class NetworkUtils {
     private final static String BASE_URL = "https://api.themoviedb.org/3/";
     public static final String POSTER_URL = "https://image.tmdb.org/t/p/w342";
     public static final String BACKDROP_URL = "https://image.tmdb.org/t/p/w500";
+    public static final String YOUTUBE_THUMBNAIL_URL = "https://img.youtube.com/vi/%s/mqdefault.jpg";
+    public static final String YOUTUBE_VIDEO_URL = "http://www.youtube.com/watch?v=%s";
 
     private static Retrofit retrofit;
 

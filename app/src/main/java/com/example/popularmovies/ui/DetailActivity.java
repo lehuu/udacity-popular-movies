@@ -3,15 +3,19 @@ package com.example.popularmovies.ui;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.popularmovies.R;
+import com.example.popularmovies.models.MovieVideo;
 import com.example.popularmovies.viewmodel.DetailViewModel;
 import com.example.popularmovies.viewmodel.DetailViewModelFactory;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -31,12 +35,14 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_votes) TextView mVotesTextView;
     @BindView(R.id.floating_action_button) FloatingActionButton mFab;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mToolbarLayout;
+    @BindView(R.id.rv_video_list) RecyclerView mMovieVideoRecyclerView;
     @OnClick(R.id.floating_action_button) void markFavorite(){
         if(mDetailViewModel != null)
             mDetailViewModel.switchFavorite();
     }
 
     private DetailViewModel mDetailViewModel;
+    private MovieVideoAdapter mMovieVideoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,20 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Initialize the adapter for the trailer section
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mMovieVideoRecyclerView.setLayoutManager(linearLayoutManager);
+        mMovieVideoAdapter = new MovieVideoAdapter(Glide.with(this));
+        mMovieVideoRecyclerView.setAdapter(mMovieVideoAdapter);
+        mMovieVideoRecyclerView.addItemDecoration(new MarginItemDecoration(this, R.dimen.padding_small));
+
+        //Set the click listener for trailers
+        mMovieVideoAdapter.setOnItemClickListener(position -> {
+            MovieVideo video = mMovieVideoAdapter.getItem(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.getYoutubeLink()));
+                startActivity(intent);
+        });
 
         populateUI();
     }
@@ -78,6 +98,11 @@ public class DetailActivity extends AppCompatActivity {
                     mFab.setColorFilter(getResources().getColor(R.color.white));
                 }
             });
+        });
+
+        //Load the trailers and onLoad populate the UI
+        mDetailViewModel.getMovieVideos().observe(this, movieVideos -> {
+            mMovieVideoAdapter.setMovieVideos(movieVideos);
         });
     }
 }
