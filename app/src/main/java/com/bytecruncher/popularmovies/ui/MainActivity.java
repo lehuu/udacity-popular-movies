@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,11 +20,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.popularmovies.R;
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieDataSource.SortType;
-import com.example.popularmovies.utils.OnItemClickListener;
-import com.example.popularmovies.viewmodel.MainViewModel;
+import com.bytecruncher.popularmovies.R;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.models.MovieDataSource.SortType;
+import com.bytecruncher.popularmovies.utils.OnItemClickListener;
+import com.bytecruncher.popularmovies.viewmodel.MainViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

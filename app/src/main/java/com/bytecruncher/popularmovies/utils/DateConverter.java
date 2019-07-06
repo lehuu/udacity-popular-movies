@@ -1,4 +1,4 @@
-package com.example.popularmovies.utils;
+package com.bytecruncher.popularmovies.utils;
 
 import androidx.room.TypeConverter;
 

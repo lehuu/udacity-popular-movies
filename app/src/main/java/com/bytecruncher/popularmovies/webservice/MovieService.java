@@ -1,8 +1,8 @@
-package com.example.popularmovies.webservice;
+package com.bytecruncher.popularmovies.webservice;
 
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieReview;
-import com.example.popularmovies.models.MovieVideo;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.models.MovieReview;
+import com.bytecruncher.popularmovies.models.MovieVideo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import android.content.Context;
 import android.graphics.Rect;

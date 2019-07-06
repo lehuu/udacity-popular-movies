@@ -1,4 +1,4 @@
-package com.example.popularmovies.models;
+package com.bytecruncher.popularmovies.models;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;

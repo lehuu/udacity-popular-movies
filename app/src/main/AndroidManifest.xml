@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.popularmovies">
+    package="com.bytecruncher.popularmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,12 +15,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.DetailActivity"
-            android:parentActivityName="com.example.popularmovies.ui.MainActivity"
+            android:parentActivityName="com.bytecruncher.popularmovies.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.popularmovies.ui.MainActivity" />
+                android:value="com.bytecruncher.popularmovies.ui.MainActivity" />
 
         </activity>
         <activity android:name=".ui.MainActivity" android:launchMode="singleTop">

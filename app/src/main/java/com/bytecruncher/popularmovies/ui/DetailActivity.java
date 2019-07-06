@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +16,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.popularmovies.R;
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieReview;
-import com.example.popularmovies.models.MovieVideo;
-import com.example.popularmovies.viewmodel.DetailViewModel;
-import com.example.popularmovies.viewmodel.DetailViewModelFactory;
+import com.bytecruncher.popularmovies.R;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.models.MovieReview;
+import com.bytecruncher.popularmovies.models.MovieVideo;
+import com.bytecruncher.popularmovies.viewmodel.DetailViewModel;
+import com.bytecruncher.popularmovies.viewmodel.DetailViewModelFactory;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

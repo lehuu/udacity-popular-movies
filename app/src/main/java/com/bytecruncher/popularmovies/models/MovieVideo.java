@@ -1,9 +1,9 @@
-package com.example.popularmovies.models;
+package com.bytecruncher.popularmovies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.popularmovies.utils.NetworkUtils;
+import com.bytecruncher.popularmovies.utils.NetworkUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

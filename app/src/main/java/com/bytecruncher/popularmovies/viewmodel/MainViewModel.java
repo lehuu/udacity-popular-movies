@@ -1,4 +1,4 @@
-package com.example.popularmovies.viewmodel;
+package com.bytecruncher.popularmovies.viewmodel;
 
 import android.app.Application;
 
@@ -6,9 +6,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
-import com.example.popularmovies.database.MovieRepository;
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieDataSource.SortType;
+import com.bytecruncher.popularmovies.database.MovieRepository;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.models.MovieDataSource.SortType;
 
 
 public class MainViewModel extends AndroidViewModel {

@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.popularmovies.R;
-import com.example.popularmovies.models.MovieReview;
-import com.example.popularmovies.utils.OnItemClickListener;
+import com.bytecruncher.popularmovies.R;
+import com.bytecruncher.popularmovies.models.MovieReview;
+import com.bytecruncher.popularmovies.utils.OnItemClickListener;
 
 import java.util.List;
 

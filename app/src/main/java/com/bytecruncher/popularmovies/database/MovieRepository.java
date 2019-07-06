@@ -1,4 +1,4 @@
-package com.example.popularmovies.database;
+package com.bytecruncher.popularmovies.database;
 
 import android.app.Application;
 import android.text.Editable;
@@ -10,9 +10,9 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.example.popularmovies.models.*;
-import com.example.popularmovies.utils.NetworkUtils;
-import com.example.popularmovies.webservice.MovieService;
+import com.bytecruncher.popularmovies.models.*;
+import com.bytecruncher.popularmovies.utils.NetworkUtils;
+import com.bytecruncher.popularmovies.webservice.MovieService;
 
 import java.util.ArrayList;
 import java.util.List;

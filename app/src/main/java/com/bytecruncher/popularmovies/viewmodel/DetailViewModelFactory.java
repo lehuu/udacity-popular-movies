@@ -1,4 +1,4 @@
-package com.example.popularmovies.viewmodel;
+package com.bytecruncher.popularmovies.viewmodel;
 
 import android.app.Application;
 

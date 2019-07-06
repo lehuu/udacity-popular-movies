@@ -1,6 +1,6 @@
-package com.example.popularmovies.utils;
+package com.bytecruncher.popularmovies.utils;
 
-import com.example.popularmovies.BuildConfig;
+import com.bytecruncher.popularmovies.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;

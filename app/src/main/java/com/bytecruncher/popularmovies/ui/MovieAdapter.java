@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.popularmovies.R;
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.utils.OnItemClickListener;
+import com.bytecruncher.popularmovies.R;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.utils.OnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

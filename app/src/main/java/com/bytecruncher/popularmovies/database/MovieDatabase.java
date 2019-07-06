@@ -1,4 +1,4 @@
-package com.example.popularmovies.database;
+package com.bytecruncher.popularmovies.database;
 
 import android.content.Context;
 
@@ -7,9 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.popularmovies.models.Movie;
-import com.example.popularmovies.models.MovieDao;
-import com.example.popularmovies.utils.DateConverter;
+import com.bytecruncher.popularmovies.models.Movie;
+import com.bytecruncher.popularmovies.models.MovieDao;
+import com.bytecruncher.popularmovies.utils.DateConverter;
 
 /*
 * Local room database for stored movies

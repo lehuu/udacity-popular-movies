@@ -1,4 +1,4 @@
-package com.example.popularmovies.ui;
+package com.bytecruncher.popularmovies.ui;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -16,9 +16,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.example.popularmovies.R;
-import com.example.popularmovies.models.MovieVideo;
-import com.example.popularmovies.utils.OnItemClickListener;
+import com.bytecruncher.popularmovies.R;
+import com.bytecruncher.popularmovies.models.MovieVideo;
+import com.bytecruncher.popularmovies.utils.OnItemClickListener;
 
 import java.util.List;
 
