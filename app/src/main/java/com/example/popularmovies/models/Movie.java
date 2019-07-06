@@ -36,25 +36,6 @@ public class Movie implements Parcelable {
     private int runtime;
     private boolean video;
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if(!(obj instanceof Movie))
-            return false;
-
-        Movie other = (Movie) obj;
-
-        return other.getId() == id
-                && other.getOverview().equals(overview)
-                && other.getFullPosterPath().equals(posterPath)
-                && other.getFullBackdropPath().equals(backdropPath)
-                && other.getReleaseDate() == releaseDate
-                && other.getTitle().equals(title)
-                && other.getVoteAverage() == voteAverage
-                && other.getRuntime() == runtime
-                && other.hasVideo() == video;
-
-    }
-
     public Movie(int id, String title, Date releaseDate,
                  float voteAverage, String overview,
                  String posterPath, String backdropPath, boolean favorite,
@@ -142,6 +123,24 @@ public class Movie implements Parcelable {
     }
 
     @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Movie))
+            return false;
+
+        Movie other = (Movie) obj;
+
+        return other.getId() == id
+                && other.getOverview().equals(overview)
+                && other.getFullPosterPath().equals(posterPath)
+                && other.getFullBackdropPath().equals(backdropPath)
+                && other.getReleaseDate() == releaseDate
+                && other.getTitle().equals(title)
+                && other.getVoteAverage() == voteAverage
+                && other.getRuntime() == runtime
+                && other.hasVideo() == video;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -186,6 +185,10 @@ public class Movie implements Parcelable {
 
         public List<Movie> getResults() {
             return results;
+        }
+
+        public int getTotalResults() {
+            return totalResults;
         }
 
         public int getPage() {

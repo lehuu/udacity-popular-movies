@@ -1,6 +1,7 @@
 package com.example.popularmovies.models;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,8 +17,8 @@ public interface MovieDao {
     @Query("SELECT * FROM movies")
     LiveData<List<Movie>> getAllMovies();
 
-    @Query("SELECT * FROM movies WHERE favorite==1")
-    LiveData<List<Movie>> getFavoriteMovies();
+    @Query("SELECT * FROM movies WHERE favorite==1 ORDER BY title")
+    DataSource.Factory<Integer, Movie> getFavoriteMoviesPaged();
 
     @Query("SELECT * FROM movies WHERE id==:id")
     LiveData<Movie> getMovie(int id);

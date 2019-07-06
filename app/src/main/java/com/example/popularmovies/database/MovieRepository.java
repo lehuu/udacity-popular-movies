@@ -1,9 +1,12 @@
 package com.example.popularmovies.database;
 
 import android.app.Application;
+import android.text.Editable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -42,20 +45,21 @@ public class MovieRepository {
      * @return A live data list with the movies loaded from DB or Network
      */
     public LiveData<PagedList<Movie>> getPagedMoviesBySortType(MovieDataSource.SortType sortType){
-        MovieDataSourceFactory dataSourceFactory = new MovieDataSourceFactory(sortType);
-
         PagedList.Config config = new PagedList.Config.Builder()
-                .setEnablePlaceholders(true)
-                .setInitialLoadSizeHint(10)
+                .setEnablePlaceholders(false)
                 .setPrefetchDistance(10)
+                .setInitialLoadSizeHint(20)
+                .setPageSize(20)
                 .build();
+        LiveData<PagedList<Movie>> moviesPagedList;
 
-        LiveData<PagedList<Movie>> moviesPagedList = new LivePagedListBuilder(dataSourceFactory, config).build();
+        //if we want favorite movies, we load them from Room otherwise from web
+        DataSource.Factory dataSourceFactory = sortType == MovieDataSource.SortType.FAVORITE ?
+                mMovieDao.getFavoriteMoviesPaged():
+                new MovieDataSourceFactory(sortType);
+
+        moviesPagedList = new LivePagedListBuilder(dataSourceFactory, config).build();
         return moviesPagedList;
-    }
-
-    public LiveData<List<Movie>> getFavoriteMovies() {
-        return mMovieDao.getFavoriteMovies();
     }
 
     public MutableLiveData<Movie> getMovieDetails(int id){

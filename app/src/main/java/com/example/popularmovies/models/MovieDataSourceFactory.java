@@ -1,13 +1,11 @@
 package com.example.popularmovies.models;
 
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
 public class MovieDataSourceFactory extends DataSource.Factory<Integer, Movie> {
     //creating the mutable live data
-    private MediatorLiveData<MovieDataSource> mMovieLifeDataSource = new MediatorLiveData <>();
-    private MovieDataSource mDataSource;
+    private MutableLiveData<MovieDataSource> mMovieLifeDataSource;
     private MovieDataSource.SortType mSortType;
 
     public MovieDataSourceFactory(MovieDataSource.SortType sortType) {
@@ -20,6 +18,7 @@ public class MovieDataSourceFactory extends DataSource.Factory<Integer, Movie> {
         MovieDataSource dataSource = new MovieDataSource(mSortType);
 
         //posting the datasource to get the values
+        mMovieLifeDataSource = new MutableLiveData<>();
         mMovieLifeDataSource.postValue(dataSource);
 
         //returning the datasource

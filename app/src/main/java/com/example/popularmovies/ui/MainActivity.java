@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -13,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -64,6 +64,18 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
         if(mMainViewModel.getMoviesPagedList() != null)
             mMainViewModel.getMoviesPagedList().removeObservers(this);
+
+        //Workaround to make sure the recyclerView always scrolls to the top when a different category is selected
+        //otherwise it might stay in the middle of the scrollView while the items shift around it
+        AdapterDataObserver dataObserver = new AdapterDataObserver() {
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                mRecyclerView.scrollToPosition(0);
+                mAdapter.unregisterAdapterDataObserver(this);
+            }
+        };
+        mAdapter.registerAdapterDataObserver(dataObserver);
+
         mMainViewModel.setSortType(sortType);
         mMainViewModel.getMoviesPagedList().observe(this, movies -> {
             // Update the cached copy of movies in the adapter.

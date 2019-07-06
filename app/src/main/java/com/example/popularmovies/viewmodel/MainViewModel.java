@@ -27,17 +27,12 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void setSortType(SortType sortType) {
+        //Reload the movie only when a new filter is selected or when our app starts up with an empty list
         if(sortType == mSortType && mMoviesPagedList != null)
             return;
 
         this.mSortType = sortType;
-        switch (mSortType) {
-            case FAVORITE:
-                break;
-                default:
-                    mMoviesPagedList = mRepository.getPagedMoviesBySortType(sortType);
-
-        }
+        mMoviesPagedList = mRepository.getPagedMoviesBySortType(sortType);
     }
 
 }

@@ -24,13 +24,17 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
             @Override
             public void onResponse(Call<Movie.MoviePage> call, Response<Movie.MoviePage> response) {
                 if (response.body() != null) {
-                    callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
+                    if(!params.placeholdersEnabled)
+                        callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
+                    else {
+                        Movie.MoviePage moviePage = response.body();
+                        callback.onResult(moviePage.getResults(), 0 , moviePage.getTotalResults(), null, FIRST_PAGE + 1);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-                callback.onResult(null, null, FIRST_PAGE);
             }
         };
 
@@ -60,7 +64,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-                callback.onResult(null, params.key);
             }
         });
     }
@@ -74,7 +77,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
                     //if the response has next page
                     //incrementing the next page number
                     Integer key = response.body().getTotalPages() > params.key ? params.key + 1 : null;
-
                     //passing the loaded data and next page value
                     callback.onResult(response.body().getResults(), key);
                 }
@@ -82,7 +84,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
             @Override
             public void onFailure(Call<Movie.MoviePage> call, Throwable t) {
-                callback.onResult(null, params.key);
             }
         });
     }
